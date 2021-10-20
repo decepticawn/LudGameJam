@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerControllerUpdated : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class PlayerControllerUpdated : MonoBehaviour
     
     [SerializeField] private float playerMoveSpeed;
     [SerializeField] private float jumpHeight;
+    [SerializeField] private float MIN_JUMP_HEIGHT = 2;
+    [SerializeField] private float MAX_JUMP_HEIGHT = 8;
+    [SerializeField] private float jumpHeightIncreaseFactor = 5;
     [SerializeField] private float playerGravity;
 
     [SerializeField] private Transform[] groundRaycastPoints;
@@ -19,6 +23,8 @@ public class PlayerControllerUpdated : MonoBehaviour
     [SerializeField] private bool isGrounded;
 
     [SerializeField] private Rigidbody playerRb;
+
+    [SerializeField] private Image chargedJumpFillImage;
 
     private void Start()
     {
@@ -50,8 +56,15 @@ public class PlayerControllerUpdated : MonoBehaviour
                 horizontalInput = rawInput ? Input.GetAxisRaw("Horizontal") : Input.GetAxis("Horizontal");
             }
         }
+
+        if (Input.GetKey(KeyCode.Space) && isGrounded)
+        {
+            jumpHeight += jumpHeightIncreaseFactor * Time.deltaTime;
+            jumpHeight = Mathf.Clamp(jumpHeight, MIN_JUMP_HEIGHT, MAX_JUMP_HEIGHT);
+            chargedJumpFillImage.fillAmount = Remap(jumpHeight, MIN_JUMP_HEIGHT, MAX_JUMP_HEIGHT, 0, 1);
+        }
         
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyUp(KeyCode.Space) && isGrounded)
         {
             jump = true;
         }
@@ -83,6 +96,7 @@ public class PlayerControllerUpdated : MonoBehaviour
         {
             jump = false;
             float jumpForce = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
+            jumpHeight = MIN_JUMP_HEIGHT;
             return jumpForce;
         }
 
@@ -96,5 +110,9 @@ public class PlayerControllerUpdated : MonoBehaviour
             Gizmos.color = Color.green;
             Gizmos.DrawRay(groundRaycastPoints[i].position, -groundRaycastPoints[i].up * .3f);
         }
+    }
+    
+    public static float Remap (float value, float from1, float to1, float from2, float to2) {
+        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
     }
 }
