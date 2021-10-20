@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
         HandleInput();
         GroundCheck();
         HandleJumpForce();
+        invisWall();
     }
 
     private void FixedUpdate()
@@ -138,6 +139,20 @@ public class PlayerController : MonoBehaviour
         // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
         Gizmos.DrawCube(new Vector3(transform.position.x, 
             transform.position.y - groundedOffset, transform.position.z), new Vector3(1, 1, 1));
+    }
+
+    private void invisWall()
+    {
+        //Left side
+        if(transform.position.x < -9.572674f)
+        {
+            transform.position = new Vector3(-9.572674f, transform.position.y, transform.position.z);
+        }
+        //Right side
+        if (transform.position.x > 9.539885f)
+        {
+            transform.position = new Vector3(9.539885f, transform.position.y, transform.position.z);
+        }
     }
     
     // void Update()
