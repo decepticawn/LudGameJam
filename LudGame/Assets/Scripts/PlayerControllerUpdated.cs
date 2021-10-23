@@ -17,6 +17,8 @@ public class PlayerControllerUpdated : MonoBehaviour
     [SerializeField] private float MAX_JUMP_HEIGHT = 8;
     [SerializeField] private float jumpHeightIncreaseFactor = 5;
     [SerializeField] private float playerGravity;
+    [SerializeField] private float MIN_GRAVITY = -50;
+    [SerializeField] private float MAX_GRAVITY = -100;
 
     [SerializeField] private Transform[] groundRaycastPoints;
     [SerializeField] private LayerMask groundLayerMask;
@@ -87,6 +89,7 @@ public class PlayerControllerUpdated : MonoBehaviour
     private void MovePlayer()
     {
         float verticalVelocity = CalculateVerticalVelocity();
+        verticalVelocity = Mathf.Clamp(verticalVelocity, -100, 100);
         playerRb.velocity = new Vector3(horizontalInput * playerMoveSpeed, verticalVelocity, 0);
     }
 
