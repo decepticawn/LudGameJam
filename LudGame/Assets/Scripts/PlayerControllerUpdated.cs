@@ -79,8 +79,19 @@ public class PlayerControllerUpdated : MonoBehaviour
     {
         for (int i = 0; i < groundRaycastPoints.Length; i++)
         {
-            if (Physics.Raycast(groundRaycastPoints[i].position, -groundRaycastPoints[i].up, .3f, groundLayerMask))
+            if (Physics.Raycast(groundRaycastPoints[i].position, -groundRaycastPoints[i].up, out RaycastHit hitInfo, .3f, groundLayerMask))
             {
+                if (hitInfo.collider.GetComponentInChildren<MovingPlatform>())
+                {
+                    transform.SetParent(hitInfo.collider.transform);
+                }
+                else
+                {
+                    if (transform.parent != null)
+                    {
+                        transform.parent = null;
+                    }
+                }
                 if (!isGrounded)
                 {
                     GroundSquash();
