@@ -256,6 +256,7 @@ GameObject:
   - component: {fileID: 8149585747657744051}
   - component: {fileID: 8149585747657744048}
   - component: {fileID: 8149585747657744049}
+  - component: {fileID: 662909491913742317}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -374,7 +375,7 @@ MonoBehaviour:
   - {fileID: 8149585747707808029}
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   isGrounded: 0
   playerRb: {fileID: 8149585747657744051}
   playerGFXHolderTransform: {fileID: 8149585747687386754}
@@ -390,6 +391,19 @@ MonoBehaviour:
   blockedLeft: 0
   blockedRight: 0
   chargedJumpFillImage: {fileID: 0}
+--- !u!114 &662909491913742317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8149585747657744062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffd04b7cf7ffa034a8f3a02c7ccf060a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 8149585747657744062}
 --- !u!1 &8149585747687386765
 GameObject:
   m_ObjectHideFlags: 0
