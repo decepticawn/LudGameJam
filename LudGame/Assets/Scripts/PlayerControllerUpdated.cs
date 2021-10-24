@@ -33,9 +33,11 @@ public class PlayerControllerUpdated : MonoBehaviour
     [SerializeField] private bool blockedLeft, blockedRight;
 
     [SerializeField] private Image chargedJumpFillImage;
+    SavePos playerPosData;
 
     private void Start()
     {
+        loadSave();
         Debug.Log("Current Gravity : " + Physics.gravity);
     }
 
@@ -218,6 +220,12 @@ public class PlayerControllerUpdated : MonoBehaviour
             Gizmos.color = Color.green;
             Gizmos.DrawRay(rightRaycastPoints[i].position, rightRaycastPoints[i].right * .2f);
         }
+    }
+
+    private void loadSave()
+    {
+        playerPosData = FindObjectOfType<SavePos>();
+        playerPosData.PlayerPosLoad();
     }
     
     public static float Remap (float value, float from1, float to1, float from2, float to2) {
