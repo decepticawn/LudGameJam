@@ -101,6 +101,10 @@ public class PlayerControllerUpdated : MonoBehaviour
             }
         }
         
+        if (transform.parent != null)
+        {
+            transform.parent = null;
+        }
         isGrounded = false;
     }
     
