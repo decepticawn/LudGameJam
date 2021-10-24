@@ -27,6 +27,10 @@ public class PlayerControllerUpdated : MonoBehaviour
     [SerializeField] private Rigidbody playerRb;
     [SerializeField] private Transform playerGFXHolderTransform;
     [SerializeField] private TrailRenderer trail;
+    
+    [SerializeField] private Transform[] leftRaycastPoints;
+    [SerializeField] private Transform[] rightRaycastPoints;
+    [SerializeField] private bool blockedLeft, blockedRight;
 
     [SerializeField] private Image chargedJumpFillImage;
 
@@ -39,6 +43,7 @@ public class PlayerControllerUpdated : MonoBehaviour
     {
         HandlePlayerInput();
         GroundCheck();
+        SideWaysRaycasts();
     }
 
     private void FixedUpdate()
@@ -59,6 +64,16 @@ public class PlayerControllerUpdated : MonoBehaviour
             {
                 horizontalInput = rawInput ? Input.GetAxisRaw("Horizontal") : Input.GetAxis("Horizontal");
             }
+        }
+
+        if (blockedLeft && horizontalInput < 0)
+        {
+            horizontalInput = 0;
+        }
+
+        if (blockedRight && horizontalInput > 0)
+        {
+            horizontalInput = 0;
         }
 
         if (Input.GetKey(KeyCode.Space) && isGrounded)
@@ -107,6 +122,40 @@ public class PlayerControllerUpdated : MonoBehaviour
         }
         isGrounded = false;
     }
+
+    private void SideWaysRaycasts()
+    {
+        LeftSideRaycasts();
+        RightSideRaycasts();
+    }
+
+    private void LeftSideRaycasts()
+    {
+        for (int i = 0; i < leftRaycastPoints.Length; i++)
+        {
+            if (Physics.Raycast(leftRaycastPoints[i].position, -leftRaycastPoints[i].right, out RaycastHit hitInfo, .2f, groundLayerMask))
+            {
+                blockedLeft = true;
+                return;
+            }
+        }
+
+        blockedLeft = false;
+    }
+
+    private void RightSideRaycasts()
+    {
+        for (int i = 0; i < rightRaycastPoints.Length; i++)
+        {
+            if (Physics.Raycast(rightRaycastPoints[i].position, rightRaycastPoints[i].right, out RaycastHit hitInfo, .2f, groundLayerMask))
+            {
+                blockedRight = true;
+                return;
+            }
+        }
+
+        blockedRight = false;
+    }
     
     private void MovePlayer()
     {
@@ -140,6 +189,10 @@ public class PlayerControllerUpdated : MonoBehaviour
 
     private void GroundSquash()
     {
+        if (playerGFXHolderTransform.localScale.y < 1f)
+        {
+            return;
+        }
         playerGFXHolderTransform.LeanScaleY(.8f, .1f).setOnComplete(() =>
         {
             playerGFXHolderTransform.LeanScaleY(1f, .1f);
@@ -152,6 +205,18 @@ public class PlayerControllerUpdated : MonoBehaviour
         {
             Gizmos.color = Color.green;
             Gizmos.DrawRay(groundRaycastPoints[i].position, -groundRaycastPoints[i].up * .3f);
+        }
+        
+        for (int i = 0; i < leftRaycastPoints.Length; i++)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawRay(leftRaycastPoints[i].position, -leftRaycastPoints[i].right * .2f);
+        }
+        
+        for (int i = 0; i < rightRaycastPoints.Length; i++)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawRay(rightRaycastPoints[i].position, rightRaycastPoints[i].right * .2f);
         }
     }
     
