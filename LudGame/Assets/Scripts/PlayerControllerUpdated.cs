@@ -25,6 +25,8 @@ public class PlayerControllerUpdated : MonoBehaviour
     [SerializeField] private bool isGrounded;
 
     [SerializeField] private Rigidbody playerRb;
+    [SerializeField] private Transform playerGFXHolderTransform;
+    [SerializeField] private TrailRenderer trail;
 
     [SerializeField] private Image chargedJumpFillImage;
 
@@ -64,6 +66,7 @@ public class PlayerControllerUpdated : MonoBehaviour
             jumpHeight += jumpHeightIncreaseFactor * Time.deltaTime;
             jumpHeight = Mathf.Clamp(jumpHeight, MIN_JUMP_HEIGHT, MAX_JUMP_HEIGHT);
             chargedJumpFillImage.fillAmount = Remap(jumpHeight, MIN_JUMP_HEIGHT, MAX_JUMP_HEIGHT, 0, 1);
+            HandlePlayerScale();
         }
         
         if (Input.GetKeyUp(KeyCode.Space) && isGrounded)
@@ -78,6 +81,10 @@ public class PlayerControllerUpdated : MonoBehaviour
         {
             if (Physics.Raycast(groundRaycastPoints[i].position, -groundRaycastPoints[i].up, .3f, groundLayerMask))
             {
+                if (!isGrounded)
+                {
+                    GroundSquash();
+                }
                 isGrounded = true;
                 return;
             }
@@ -100,10 +107,28 @@ public class PlayerControllerUpdated : MonoBehaviour
             jump = false;
             float jumpForce = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
             jumpHeight = MIN_JUMP_HEIGHT;
+            HandlePlayerScale();
             return jumpForce;
         }
 
         return playerRb.velocity.y;
+    }
+
+    private void HandlePlayerScale()
+    {
+        float yScale = Remap(jumpHeight, MIN_JUMP_HEIGHT, MAX_JUMP_HEIGHT, 1f, .5f);
+        playerGFXHolderTransform.localScale = new Vector3(playerGFXHolderTransform.localScale.x, yScale,
+            playerGFXHolderTransform.localScale.z);
+        trail.startWidth = yScale;
+        trail.endWidth = yScale;
+    }
+
+    private void GroundSquash()
+    {
+        playerGFXHolderTransform.LeanScaleY(.8f, .1f).setOnComplete(() =>
+        {
+            playerGFXHolderTransform.LeanScaleY(1f, .1f);
+        });
     }
 
     private void OnDrawGizmos()
