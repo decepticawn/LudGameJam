@@ -24,8 +24,11 @@ public class WindArea : MonoBehaviour
 
     IEnumerator windTimer()
     {
-        Wind.gameObject.SetActive(true);
-        yield return new WaitForSeconds(Seconds);
-        Wind.gameObject.SetActive(false);
+        while(isTimed)
+        {
+            Wind.gameObject.SetActive(false);
+            yield return new WaitForSeconds(Seconds);
+            Wind.gameObject.SetActive(true);        
+        }
     }
 }
