@@ -43,12 +43,12 @@ public class Pause : MonoBehaviour
     }
     public void Beginning()
     {
-        player.transform.position = new Vector3(0f,0.5f,0f);
+        player.transform.position = new Vector3(-4.87f,0.5f,0f);
     }
 
     public void FanSection()
     {
-        player.transform.position = new Vector3(3f,61.3f,0f);
+        player.transform.position = new Vector3(0f,49.81f,0f);
     }
 
     public void WindSection()

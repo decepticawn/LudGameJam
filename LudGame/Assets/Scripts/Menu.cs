@@ -35,14 +35,14 @@ public class Menu : MonoBehaviour
 
     public void Beginning()
     {
-        PlayerPosSave(0f,0.5f,0f);
+        PlayerPosSave(-4.87f,0.5f,0f);
         PlayerPrefs.Save();
         SceneManager.LoadScene("MainGameScene");
     }
 
     public void FanSection()
     {
-        PlayerPosSave(3f,61.3f,0f);
+        PlayerPosSave(0f,49.81f,0f);
         PlayerPrefs.Save();
         SceneManager.LoadScene("MainGameScene");
     }
