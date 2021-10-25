@@ -48,7 +48,7 @@ public class Pause : MonoBehaviour
 
     public void FanSection()
     {
-        player.transform.position = new Vector3(0f,49.81f,0f);
+        player.transform.position = new Vector3(2.91f,61.12f,0f);
     }
 
     public void WindSection()

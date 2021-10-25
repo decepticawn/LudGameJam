@@ -42,7 +42,7 @@ public class Menu : MonoBehaviour
 
     public void FanSection()
     {
-        PlayerPosSave(0f,49.81f,0f);
+        PlayerPosSave(2.91f,61.12f,0f);
         PlayerPrefs.Save();
         SceneManager.LoadScene("MainGameScene");
     }

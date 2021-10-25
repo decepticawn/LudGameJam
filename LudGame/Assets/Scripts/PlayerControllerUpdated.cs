@@ -34,6 +34,7 @@ public class PlayerControllerUpdated : MonoBehaviour
 
     [SerializeField] private Image chargedJumpFillImage;
     SavePos playerPosData;
+    public Heavy heavy;
 
     private void Start()
     {
@@ -43,7 +44,15 @@ public class PlayerControllerUpdated : MonoBehaviour
 
     private void Update()
     {
-        HandlePlayerInput();
+        if(heavy.isHeavy)
+        {
+            horizontalInput = 0;
+            playerRb.velocity = new Vector3(0f, -50f, 0f);
+        }
+        if(heavy.isHeavy == false)
+        {
+            HandlePlayerInput();
+        }
         GroundCheck();
         SideWaysRaycasts();
     }
@@ -230,5 +239,16 @@ public class PlayerControllerUpdated : MonoBehaviour
     
     public static float Remap (float value, float from1, float to1, float from2, float to2) {
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+    }
+    void OnTriggerStay(Collider col)
+    {
+        if(col.tag == "Wind")
+        {
+            heavy.canHeavy = true;
+        }
+        else if(col.tag == "BeforeWind")
+        {
+            heavy.canHeavy = false;
+        }
     }
 }
