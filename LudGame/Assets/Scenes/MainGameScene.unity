@@ -750,11 +750,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 392434768832350983, guid: 41c1f6bab162abf44ab68e2838b6cf56, type: 3}
       propertyPath: WindDirection.x
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 392434768832350983, guid: 41c1f6bab162abf44ab68e2838b6cf56, type: 3}
       propertyPath: WindDirection.y
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4234984234336573312, guid: 41c1f6bab162abf44ab68e2838b6cf56, type: 3}
       propertyPath: m_Name
