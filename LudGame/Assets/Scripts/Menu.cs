@@ -10,22 +10,14 @@ public class Menu : MonoBehaviour
 {
     private int seconds = 1;
     [SerializeField]private Image img1, img2, img3;
-    [SerializeField]private GameObject MainMenu, AreaSelectMenu; 
+    [SerializeField]private GameObject MainMenu;
     private Scene MainGameScene;
     SavePos playerPosData;
     // Start is called before the first frame update
     void Start()
     {
-        AreaSelectMenu.gameObject.SetActive(false);
         MainMenu.gameObject.SetActive(true);
         StartCoroutine(FadeImage(true));
-    }
-
-    // Update is called once per frame
-    public void StartGame()
-    {
-        AreaSelectMenu.gameObject.SetActive(true);
-        MainMenu.gameObject.SetActive(false);
     }
 
     public void ExitGame()
@@ -59,12 +51,6 @@ public class Menu : MonoBehaviour
         PlayerPosSave(18.6f,111.2f,0f);
         PlayerPrefs.Save();
         SceneManager.LoadScene("MainGameScene");
-    }
-
-    public void Back()
-    {
-        AreaSelectMenu.gameObject.SetActive(false);
-        MainMenu.gameObject.SetActive(true);
     }
 
     IEnumerator FadeImage(bool fadeIn)
