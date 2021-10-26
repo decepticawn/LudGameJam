@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Pause : MonoBehaviour
 {
-    [SerializeField] GameObject pauseMenu = null, pauseMain, teleportLoc, player;
+    [SerializeField] GameObject pauseMenu = null, pauseMain, player;
     [SerializeField] AudioSource audio;
     bool isPaused;
     // Start is called before the first frame update
@@ -20,7 +20,6 @@ public class Pause : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape))
         {  
             audio.Pause();
-             teleportLoc.gameObject.SetActive(false);
              isPaused = !isPaused;
              Time.timeScale = isPaused ? 0 : 1;
 		     pauseMenu.SetActive(isPaused);
@@ -34,15 +33,9 @@ public class Pause : MonoBehaviour
     public void Continue()
     {
         audio.UnPause();
-        teleportLoc.gameObject.SetActive(false);
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0 : 1;
 		pauseMenu.SetActive(isPaused);
-    }
-    public void Teleport()
-    {
-        pauseMain.gameObject.SetActive(false);
-        teleportLoc.gameObject.SetActive(true);
     }
     public void Beginning()
     {
@@ -68,10 +61,5 @@ public class Pause : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("MenuScene");
-    }
-    public void Back()
-    {
-        pauseMain.gameObject.SetActive(true);
-        teleportLoc.gameObject.SetActive(false);
     }
 }
