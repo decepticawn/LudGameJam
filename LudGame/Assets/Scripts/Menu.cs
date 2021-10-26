@@ -10,6 +10,7 @@ public class Menu : MonoBehaviour
 {
     private int seconds = 1;
     [SerializeField]private Image img1, img2, img3;
+    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField]private GameObject MainMenu;
     private Scene MainGameScene;
     SavePos playerPosData;
@@ -17,7 +18,8 @@ public class Menu : MonoBehaviour
     void Start()
     {
         MainMenu.gameObject.SetActive(true);
-        StartCoroutine(FadeImage(true));
+        //StartCoroutine(FadeImage(true));
+        StartCoroutine(FadeCanvasGroup(true));
     }
 
     public void ExitGame()
@@ -78,6 +80,32 @@ public class Menu : MonoBehaviour
                 img1.color = new Color(1, 1, 1, i);
                 img2.color = new Color(1, 1, 1, i);
                 img3.color = new Color(1, 1, 1, i);
+                yield return null;
+            }
+        }
+    }
+    
+    IEnumerator FadeCanvasGroup(bool fadeIn)
+    {
+        // fade from opaque to transparent
+        if (fadeIn)
+        {
+            // loop over 1 second backwards
+            for (float i = 0;i<= seconds; i += Time.deltaTime)
+            {
+                // set color with i as alpha
+                canvasGroup.alpha = i;
+                yield return null;
+            }
+        }
+        // fade from transparent to opaque
+        else
+        {
+            // loop over 1 second
+            for (float i = seconds;i>= 0; i -= Time.deltaTime)
+            {
+                // set color with i as alpha
+                canvasGroup.alpha = i;
                 yield return null;
             }
         }
