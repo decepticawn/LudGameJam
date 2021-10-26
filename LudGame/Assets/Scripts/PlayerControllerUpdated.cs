@@ -33,6 +33,7 @@ public class PlayerControllerUpdated : MonoBehaviour
     [SerializeField] private bool blockedLeft, blockedRight;
 
     [SerializeField] private Image chargedJumpFillImage;
+    [SerializeField] private AudioSource jumpNoise, chargeJump;
     SavePos playerPosData;
     public Heavy heavy;
 
@@ -97,6 +98,8 @@ public class PlayerControllerUpdated : MonoBehaviour
         
         if (Input.GetKeyUp(KeyCode.Space) && isGrounded)
         {
+            chargeJump.Pause();
+            jumpNoise.Play();
             jump = true;
         }
     }

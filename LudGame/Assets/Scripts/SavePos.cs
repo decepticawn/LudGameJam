@@ -15,7 +15,7 @@ public class SavePos : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //loadArtScene();
+        loadArtScene();
         if(PlayerPrefs.GetInt("Saved")==1&&PlayerPrefs.GetInt("TimeToLoad")==1)
         {
             float pX = player.transform.position.x;
