@@ -1,16 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Congrats : MonoBehaviour
 {
-    public GameObject CongratsScreen;
+    [SerializeField]private GameObject PressEScreen;
+    [SerializeField]private Collider portalBox;
+    private bool isByPortal = false;
     void OnTriggerEnter(Collider col)
     {
-        CongratsScreen.gameObject.SetActive(true);
+        if(col.tag == "Player")
+        {
+            PressEScreen.gameObject.SetActive(true);
+            isByPortal = true;
+        }
     }
     void OnTriggerExit(Collider col)
     {
-        CongratsScreen.gameObject.SetActive(false);
+        if(col.tag == "Player")
+        {
+            PressEScreen.gameObject.SetActive(false);
+            isByPortal = false;
+        }
+    }
+    void Update()
+    {
+        if(Input.GetKey(KeyCode.E)&&isByPortal)
+        {
+            SceneManager.LoadScene("Teleport+WinScene");
+        }
     }
 }

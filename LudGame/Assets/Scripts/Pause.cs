@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class Pause : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu = null, pauseMain, player;
-    [SerializeField] AudioSource audio;
     bool isPaused;
     // Start is called before the first frame update
     void Start()
@@ -19,11 +18,10 @@ public class Pause : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {  
-            audio.Pause();
-             isPaused = !isPaused;
-             Time.timeScale = isPaused ? 0 : 1;
-		     pauseMenu.SetActive(isPaused);
-             pauseMain.gameObject.SetActive(true);
+            isPaused = !isPaused;
+            Time.timeScale = isPaused ? 0 : 1;
+		    pauseMenu.SetActive(isPaused);
+            pauseMain.gameObject.SetActive(true);
         }
         else if(Input.GetKeyDown(KeyCode.Escape)&&isPaused)
         {
@@ -32,7 +30,6 @@ public class Pause : MonoBehaviour
     }
     public void Continue()
     {
-        audio.UnPause();
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0 : 1;
 		pauseMenu.SetActive(isPaused);
