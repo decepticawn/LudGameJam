@@ -11,12 +11,13 @@ public class Menu : MonoBehaviour
     private int seconds = 1;
     [SerializeField]private Image img1, img2, img3;
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField]private GameObject MainMenu;
+    [SerializeField]private GameObject MainMenu, optionsMenu;
     private Scene MainGameScene;
     SavePos playerPosData;
     // Start is called before the first frame update
     void Start()
     {
+        optionsMenu.gameObject.SetActive(false);
         MainMenu.gameObject.SetActive(true);
         //StartCoroutine(FadeImage(true));
         StartCoroutine(FadeCanvasGroup(true));
@@ -34,25 +35,23 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("MainGameScene");
     }
 
-    public void FanSection()
+    public void WindSection()
     {
         PlayerPosSave(2.91f,61.12f,0f);
         PlayerPrefs.Save();
         SceneManager.LoadScene("MainGameScene");
     }
 
-    public void WindSection()
+    public void NearEnd()
     {
         PlayerPosSave(15.6f, 88.5f,0f);
         PlayerPrefs.Save();
         SceneManager.LoadScene("MainGameScene");
     }
-
-    public void NearEnd()
+    public void Options()
     {
-        PlayerPosSave(18.6f,111.2f,0f);
-        PlayerPrefs.Save();
-        SceneManager.LoadScene("MainGameScene");
+        MainMenu.gameObject.SetActive(false);
+        optionsMenu.gameObject.SetActive(true);
     }
 
     IEnumerator FadeImage(bool fadeIn)
