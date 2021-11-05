@@ -10,6 +10,7 @@ public class SavePos : MonoBehaviour
     private float pX;
     private float pY;
     private float pZ;
+    private int isNewGame = 0;
     private Scene ArtScene;
     
     // Start is called before the first frame update
@@ -25,6 +26,7 @@ public class SavePos : MonoBehaviour
             pX = PlayerPrefs.GetFloat("p_x");
             pY = PlayerPrefs.GetFloat("p_y");
             pZ = PlayerPrefs.GetFloat("p_z");
+            isNewGame = PlayerPrefs.GetInt("isNewGame");
             player.transform.position = new Vector3(pX, pY, pZ);
             PlayerPrefs.SetInt("TimeToLoad", 0);
             PlayerPrefs.Save();
@@ -36,7 +38,15 @@ public class SavePos : MonoBehaviour
         PlayerPrefs.SetInt("TimeToLoad", 1);
         PlayerPrefs.Save();
     }
-
+    
+    public void PlayerPosSave()
+    {
+        PlayerPrefs.SetFloat("p_x", player.transform.position.x);
+        PlayerPrefs.SetFloat("p_y", player.transform.position.y);
+        PlayerPrefs.SetFloat("p_z", player.transform.position.z);
+        PlayerPrefs.SetInt("Saved", 1);
+        PlayerPrefs.Save();
+    }
     private void loadArtScene()
     {
         SceneManager.LoadScene("ArtScene", LoadSceneMode.Additive);

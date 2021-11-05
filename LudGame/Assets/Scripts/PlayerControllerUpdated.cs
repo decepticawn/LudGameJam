@@ -34,17 +34,23 @@ public class PlayerControllerUpdated : MonoBehaviour
 
     [SerializeField] private Image chargedJumpFillImage;
     [SerializeField] private AudioSource jumpNoise;
+    [SerializeField] private GameObject playerTransform;
     SavePos playerPosData;
     public Heavy heavy;
 
-    private void Start()
+    private void Awake()
     {
         loadSave();
+    }
+    private void Start()
+    {     
         Debug.Log("Current Gravity : " + Physics.gravity);
     }
 
     private void Update()
     {
+        
+        PlayerPosSave(playerTransform.transform.position.x, playerTransform.transform.position.y, playerTransform.transform.position.z);
         if(heavy.isHeavy)
         {
             horizontalInput = 0;
@@ -252,5 +258,14 @@ public class PlayerControllerUpdated : MonoBehaviour
         {
             heavy.canHeavy = false;
         }
+    }
+
+    public void PlayerPosSave(float x, float y, float z)
+    {
+        PlayerPrefs.SetFloat("p_x", x);
+        PlayerPrefs.SetFloat("p_y", y);
+        PlayerPrefs.SetFloat("p_z", z);
+        PlayerPrefs.SetInt("Saved", 1);
+        PlayerPrefs.Save();
     }
 }

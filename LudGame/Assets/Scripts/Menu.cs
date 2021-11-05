@@ -11,16 +11,29 @@ public class Menu : MonoBehaviour
     private int seconds = 1;
     [SerializeField]private Image img1, img2, img3;
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField]private GameObject MainMenu, optionsMenu;
+    [SerializeField]private GameObject MainMenu, optionsMenu, continueMenu;
+    [SerializeField]private Button continueButton;
     private Scene MainGameScene;
     SavePos playerPosData;
     // Start is called before the first frame update
     void Start()
     {
         optionsMenu.gameObject.SetActive(false);
+        continueMenu.gameObject.SetActive(false);
         MainMenu.gameObject.SetActive(true);
         //StartCoroutine(FadeImage(true));
         StartCoroutine(FadeCanvasGroup(true));
+    }
+    void Update()
+    {
+        if(PlayerPrefs.GetInt("isNewGame") == 1)
+        {
+            continueButton.interactable = false;
+        }
+        else
+        {
+            continueButton.interactable = true;
+        }
     }
 
     public void ExitGame()
@@ -28,11 +41,10 @@ public class Menu : MonoBehaviour
         Application.Quit();
     }
 
-    public void Beginning()
+    public void Play()
     {
-        PlayerPosSave(-4.87f,0.5f,0f);
-        PlayerPrefs.Save();
-        SceneManager.LoadScene("MainGameScene");
+        MainMenu.gameObject.SetActive(false);
+        continueMenu.gameObject.SetActive(true);
     }
 
     public void WindSection()
@@ -52,6 +64,23 @@ public class Menu : MonoBehaviour
     {
         MainMenu.gameObject.SetActive(false);
         optionsMenu.gameObject.SetActive(true);
+    }
+
+    public void Continue()
+    {
+        SceneManager.LoadScene("MainGameScene");
+    }
+
+    public void NewGame()
+    {
+        PlayerPosSave(-4.87f,0.5f,0f);
+        SceneManager.LoadScene("MainGameScene");
+    }
+
+    public void Back()
+    {
+        MainMenu.gameObject.SetActive(true);
+        continueMenu.gameObject.SetActive(false);
     }
 
     IEnumerator FadeImage(bool fadeIn)
@@ -115,6 +144,7 @@ public class Menu : MonoBehaviour
         PlayerPrefs.SetFloat("p_x", x);
         PlayerPrefs.SetFloat("p_y", y);
         PlayerPrefs.SetFloat("p_z", z);
+        PlayerPrefs.SetInt("isNewGame", 0);
         PlayerPrefs.SetInt("Saved", 1);
         PlayerPrefs.Save();
     }
